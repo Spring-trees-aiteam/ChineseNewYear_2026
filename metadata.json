@@ -1,0 +1,7 @@
+{
+  "name": "ChineseNewYear_n_RedCarpet",
+  "description": "A cutting-edge generative AI studio combining Computer Vision and Multimodal models for Red Carpet transformations and Brand Interactions.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

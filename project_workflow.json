@@ -1,0 +1,126 @@
+{
+  "project_info": {
+    "name": "LuxeAI Studio",
+    "description": "A Generative AI application combining Computer Vision and Multimodal models for luxury brand marketing.",
+    "version": "1.3.7",
+    "last_updated": "2024-05-22"
+  },
+  "ai_models": {
+    "logic_and_search": "gemini-3-flash-preview",
+    "image_generation": "gemini-3-pro-image-preview"
+  },
+  "workflows": {
+    "red_carpet_transformation": {
+      "title": "紅毯巨星合成 (Red Carpet Template Swap)",
+      "description": "Replaces a specific character in a template while preserving others and generating a branded backdrop.",
+      "inputs": {
+        "image_source": "Camera Capture OR File Upload",
+        "company_name": "Text input for branding",
+        "template_image": "/Images/RedCarpet.png (Fixed asset)",
+        "fixed_logo": "/Images/Spring_Trees.png (Fixed asset)"
+      },
+      "process_steps": [
+        {
+          "step": 1,
+          "action": "Logo Search",
+          "model": "gemini-3-flash-preview",
+          "details": "Uses Google Search tool to find the official logo URL for the user-provided company name."
+        },
+        {
+          "step": 2,
+          "action": "Asset Preparation",
+          "details": "Converts User Image, Template Image, and Spring Trees Logo to Base64 strings."
+        },
+        {
+          "step": 3,
+          "action": "Prompt Construction & Generation",
+          "model": "gemini-3-pro-image-preview",
+          "logic_rules": {
+            "character_replacement": {
+              "target": "Left 2 (Man with scarf)",
+              "action": "Replace face and body based on user input",
+              "style": "High-end luxury red carpet fashion",
+              "lighting_integration": "Apply strong direct flash, match scene exposure/contrast, and cast realistic shadows on the carpet."
+            },
+            "character_preservation": {
+              "lock_targets": [
+                "Left 1 (Bald man in gold suit)",
+                "Right 2 (Woman in black gown)",
+                "Right 1 (Man with bow tie)"
+              ],
+              "instruction": "Do not change face or body of locked targets."
+            },
+            "background_branding": {
+              "action": "Generate branding on solid black wall",
+              "pattern_type": "Staggered / Half-drop / Brick Pattern (強制交錯)",
+              "elements": [
+                "Spring Trees Logo (Image)",
+                "User Company Brand (Logo/Text)"
+              ],
+              "layout_logic": "Logos must be offset by 50% on alternate rows (Brick laying style). Solid Black Background."
+            }
+          }
+        }
+      ],
+      "output": "4K resolution photorealistic image (Base64)"
+    },
+    "brand_interaction": {
+      "title": "品牌互動 (Commercial Card Generator)",
+      "description": "Generates a 3D rendered high-end commercial card merging user photo with dynamically inferred brand products.",
+      "inputs": {
+        "image_source": "Camera Capture OR File Upload",
+        "brand_name": "Text input (Determines product type e.g. Kagome->Ketchup)",
+        "header_text": "Text input (e.g. Slogan)",
+        "footer_text": "Text input (e.g. Website)"
+      },
+      "process_steps": [
+        {
+          "step": 1,
+          "action": "Data Collection",
+          "details": "User provides brand name, slogan, footer text, and selects an image (Upload or Camera)."
+        },
+        {
+          "step": 2,
+          "action": "Generation",
+          "model": "gemini-3-pro-image-preview",
+          "logic_rules": {
+            "branding": "Use Google Search to retrieve brand visual identity and main product line.",
+            "product_inference": "Automatically determine product from brand name (e.g. Horoyoi -> Alcohol).",
+            "clothing_strategy": {
+              "Male": "Suit or Crisp Shirt. Vibe: Professional, Clean, Fresh.",
+              "Female": "Evening Gown or Dress. Style: Elevated version of original outfit."
+            },
+            "constraints": "Max 4 product items in the scene.",
+            "composition": "3:4 Aspect Ratio. Logo at top center. Products in foreground."
+          }
+        }
+      ],
+      "output": "3:4 resolution photorealistic commercial card (Base64)"
+    }
+  },
+  "user_guide": {
+    "getting_started": [
+      "Open the application.",
+      "Click the 'Select API Key' button to authorize via Google AI Studio (Paid key required for Veo/Imagen features).",
+      "Select a mode from the landing page: '紅毯巨星' or '品牌互動'."
+    ],
+    "operating_steps_red_carpet": [
+      "1. Enter the Brand Name (e.g., CHANEL, TESLA).",
+      "2. Choose your image source: Click '上傳照片' to pick a file, OR '相機拍攝' to use your webcam.",
+      "3. (Optional) Select specific Gender, Body Type, or Dress Style.",
+      "4. Click '生成巨星影像'.",
+      "5. Wait for the AI to search for the logo and generate the image (approx. 10-20 seconds).",
+      "6. Preview the result with the alternating logo wall and character swap.",
+      "7. Click '下載影像' to save."
+    ],
+    "operating_steps_brand_interaction": [
+      "1. Enter the Brand Name (e.g., Horoyoi, Kagome).",
+      "2. Enter Header Text (Slogan) and Footer Text.",
+      "3. Choose your image source: Click '上傳照片' to pick a file, OR '相機拍攝' to use your webcam.",
+      "4. If using camera: Align your hand to naturally hold a product and capture.",
+      "5. Click '✨ 生成商業賀卡'.",
+      "6. AI will automatically identify the brand product and generate the card using your slogan.",
+      "7. Preview and download the result."
+    ]
+  }
+}

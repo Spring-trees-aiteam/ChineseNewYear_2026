@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LuxeAI 影像工作室</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              crimson: {
+                DEFAULT: '#800000',
+                dark: '#4a0000',
+                light: '#9e1b1b',
+              },
+              gold: {
+                DEFAULT: '#D4AF37', // Metallic Gold
+                light: '#F7E987',   // Highlight
+                dark: '#B4941F',    // Shadow
+                metallic: '#C5A028'
+              },
+              cream: '#F5F5DC',
+              paper: '#FFF8E7',   // Slightly warmer white for paper look
+              ink: '#2b2b2b',     // Softer black for text
+            },
+            fontFamily: {
+              sans: ['"Noto Sans TC"', 'sans-serif'],
+              serif: ['"Noto Serif TC"', 'serif'],
+            },
+            boxShadow: {
+              'paper-1': '0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1)',
+              'paper-2': '0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1)',
+              'paper-3': '0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1)',
+              'gold-glow': '0 0 20px rgba(212, 175, 55, 0.4)',
+              'inner-depth': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.15)',
+            },
+            backgroundImage: {
+              'gold-gradient': 'linear-gradient(135deg, #D4AF37 0%, #F7E987 50%, #B4941F 100%)',
+              'crimson-texture': 'radial-gradient(circle at 50% 0%, #9e1b1b 0%, #800000 60%, #4a0000 100%)',
+              'wave-pattern': "url(\"data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21.184 20c.357-.13.72-.264 1.088-.402l1.768-.661C33.64 15.347 39.647 14 50 14c10.271 0 15.362 1.222 24.629 4.928.955.374 1.869.74 2.75 1.072h6.225c-2.51-.73-5.139-1.691-8.233-2.928C65.888 12.327 63.794 10 50 10c-13.793 0-15.888 2.327-25.371 7.072-3.094 1.237-5.723 2.198-8.233 2.928h6.225l-1.437.537A7.5 7.5 0 0 0 21.184 20zm-7.104 0c.189-.06.376-.12.563-.18l.842-.295C24.86 16.038 31.979 13 50 13c18.021 0 25.14 3.038 34.511 6.525.187.06.374.12.563.18H86.25c-3.15-1.11-6.495-2.613-10.28-4.575C66.19 9.938 62.71 6 50 6c-12.71 0-16.19 3.938-25.97 9.13-3.785 1.962-7.13 3.465-10.28 4.575h1.366l-.732.263A7.5 7.5 0 0 0 14.08 20zM50 0c11.362 0 14.28 3.86 21.24 7.59 2.53 1.357 5.766 2.553 9.38 3.32v3.003c-3.69-.976-6.843-2.316-9.155-3.555C65.006 6.94 62.623 4 50 4c-12.623 0-15.006 2.94-21.465 6.358-2.312 1.239-5.465 2.579-9.155 3.555V10.91c3.614-.767 6.85-1.963 9.38-3.32C35.72 3.86 38.638 0 50 0z' fill='%23D4AF37' fill-opacity='0.15' fill-rule='evenodd'/%3E%3C/svg%3E\")"
+            },
+            animation: {
+              'float': 'float 8s ease-in-out infinite',
+              'cloud-drift': 'drift 60s linear infinite',
+              'shimmer': 'shimmer 3s infinite linear',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-15px)' },
+              },
+              drift: {
+                '0%': { backgroundPosition: '0 0' },
+                '100%': { backgroundPosition: '100% 0' },
+              },
+              shimmer: {
+                '0%': { backgroundPosition: '-200% center' },
+                '100%': { backgroundPosition: '200% center' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        background-color: #800000;
+        color: #F5F5DC;
+        font-family: 'Noto Sans TC', sans-serif;
+        overflow-x: hidden;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #4a0000;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #D4AF37;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #F7E987;
+      }
+
+      /* Text Gradients for Gold Effect */
+      .text-gradient-gold {
+        background: linear-gradient(to right, #D4AF37, #F7E987, #D4AF37);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        background-size: 200% auto;
+        animation: shimmer 5s linear infinite;
+      }
+      
+      .clip-paper-cut {
+        clip-path: polygon(2% 0%, 98% 0%, 100% 2%, 100% 98%, 98% 100%, 2% 100%, 0% 98%, 0% 2%);
+      }
+
+      .clip-diagonal-right {
+        clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^1.38.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-crimson-texture min-h-screen">
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
